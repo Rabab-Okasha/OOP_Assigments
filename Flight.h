@@ -15,8 +15,34 @@ private:
     int **seating_plan;
     string *passengers_names;
     static int CurrentNoBookedOfSeats;
-    const int no_of_rows = 4;
+    const int columns = 4; // Assumption of number of seats Per row
+    int rows = (seating_capacity / columns); //no of rows = capicity / no of columns
+
 public:
+    //3 args consturctor
+
+    //Copy constructor
+
+    //Add passengers to a flight
+
+    //Search by name
+
+    //Search by seat number
+
+    //Operator prefix++
+
+    //Operator postfix--
+
+    //Operator +=
+
+    //Operator -=
+
+    //Remove passenger methode
+
+    //Destructor
+
+    //Display flight details
+    void Display() const;
 
 };
 
