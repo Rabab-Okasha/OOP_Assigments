@@ -7,6 +7,14 @@ class Passenger {
 private:
 
 public:
+//2 args constructor
+
+//static function for the current total number of passengers
+
+//Destructor
+
+//Display
+    void Display() const;
 
 };
 
