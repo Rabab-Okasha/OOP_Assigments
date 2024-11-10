@@ -4,18 +4,19 @@
 //initialize the static variable
 
 //2 args Constructor
-
 Passenger::Passenger(string name , int id )
 {
     passenger_name = name;
     passenger_id = id;
 }
+
+// insertion operator friend funcion >>
 istream &operator>>(istream &is ,  Passenger &p )
 {
-   cout<<"Enter your name : ";
-   is>>p.passenger_name;
-   cout<<"Enter your id : ";
-   is>>p.passenger_id;
+   cout << "\nEnter your name : ";
+   is >> p.passenger_name;
+   cout << "\nEnter your ID : ";
+   is >> p.passenger_id;
 }
 
 //Destructor
@@ -24,7 +25,7 @@ istream &operator>>(istream &is ,  Passenger &p )
 
 //Display passenger's info
 void Passenger::Display() const{
-    cout << "Passenger's name: " << name << "\nPassenger's ID: " << ID << endl;
+    cout << "\nPassenger's name: " << passenger_name << "\nPassenger's ID: " << passenger_id << endl;
 }
 
-// insertion operator friend funcion >>
+
