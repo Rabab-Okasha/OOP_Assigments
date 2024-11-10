@@ -4,16 +4,15 @@
 using namespace std;
 
 class Passenger {
+friend class Flight;
+friend istream& operator>>(istream &is,  Passenger &p);
  private:
         string passenger_name;
         int passenger_id;
-
-    public:
-        Passenger(string name , int id);
-   friend istream& operator>>(istream &is ,  Passenger &p );
-
-    friend class Flight;
-
+public:
+        // 2 args constructor
+        Passenger(string name, int id);
+  
 };
 
 
