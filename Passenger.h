@@ -4,17 +4,15 @@
 using namespace std;
 
 class Passenger {
-private:
+ private:
+        string passenger_name;
+        int passenger_id;
 
-public:
-//2 args constructor
+    public:
+        Passenger(string name , int id);
+   friend istream& operator>>(istream &is ,  Passenger &p );
 
-//static function for the current total number of passengers
-
-//Destructor
-
-//Display
-    void Display() const;
+    friend class Flight;
 
 };
 
