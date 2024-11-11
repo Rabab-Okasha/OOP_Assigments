@@ -22,8 +22,8 @@ Flight::Flight(string dest , int cap , int number)
 }
 
 
-
-Flight& Flight::operator++( )
+//overload the prefix operator ++ 
+Flight& Flight::operator++()
 {
     ++rows;
         int** temp = new int* [rows];
@@ -40,6 +40,8 @@ Flight& Flight::operator++( )
     seating_plan = temp;
     return *this;
 }
+
+//Add passegners method
 void Flight::add_passengers(int passengers_number, Passenger names_of_passenger[], Flight& f)
 {
     while(booked_seats + passengers_number > rows*columns)
@@ -77,6 +79,30 @@ void Flight::add_passengers(int passengers_number, Passenger names_of_passenger[
         counter_rows++;
     }}
 
+//Search by passenger's name
+bool Flight::search_name(string nm){
+    for(int i = 0; i < seating_capacity; i++){
+        if(passengers_names[i] == nm) {
+            cout << "Passanger is on the flight" << endl;
+            return true;
+        }
+    }
+    cout << "Passanger is Not on the flight" << endl;
+    return false;
+}
+
+//Search by seat number
+void Flight::search_seatNo(int r, int c){
+    if(r >= 0 && r < rows && c >= 0 && c < columns){
+        if(seating_plan[r][c] == 0)
+            cout << "Seat is Not Booked" << endl;
+        else
+            cout << "Seat is Booked" << endl;
+    }else
+        cout << "Invalid seat number!" << endl;
+}
+
+//Display method
 void Flight::Display() const{
     //Displaying flight details
    cout << "Flight Details: " << endl;
@@ -92,7 +118,6 @@ void Flight::Display() const{
            cout << setw(5) << seating_plan[i][j] << " ";
        cout << endl;
    }
-  
    cout << "\nPassengers' names: ";
    //displaying passengers' names
    for(int i = 0; i < seating_capacity; i++)
