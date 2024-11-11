@@ -35,17 +35,18 @@ private:
      Flight operator --();
      //Operator -=
      Flight operator -=(int num);
-     //Search by name
-     void search_passenger(string name);
-     //Display flight details
-     void Display() const;
      //Add passengers to a flight
      void add_passengers(int passengers_number, Passenger names_of_passenger[], Flight& f);
+     //Search by name
+     bool search_name(string nm);
+     //Search by seat number
+     void search_seatNo(int r, int c);
+     //Display flight details
+     void Display() const;
+
 
     //Copy constructor
- 
 
-    //Search by seat number
 
     //Remove passenger methode
 
