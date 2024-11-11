@@ -126,4 +126,10 @@ void Flight::Display() const{
        cout << "\nPassanger " << i + 1 << ": " << passengers_names[i];
 }
 
-
+//Destructor
+Flight::~Flight(){
+    for(int i = 0; i < rows; i++)
+        delete [] seating_plan[i];
+    delete [] seating_plan;
+    delete [] passengers_names;
+}
