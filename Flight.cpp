@@ -11,6 +11,8 @@ Flight::Flight(string dest , int cap , int number)
    seating_capacity = cap;
    no_of_flights = number;
    flight_dest = dest;
+   departure_time = "00:00";
+   time_zone = " ";
    seating_plan = new int*[rows];
    for(int i=0 ; i < rows ; i++)
    {
