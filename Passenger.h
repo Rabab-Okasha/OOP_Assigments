@@ -7,11 +7,18 @@ class Passenger {
 friend class Flight;
 friend istream& operator>>(istream &is,  Passenger &p);
  private:
-        string passenger_name;
-        int passenger_id;
+    string passenger_name;
+    int passenger_id;
+    static int CountTotalPassengers;
 public:
-        // 2 args constructor
-        Passenger(string name, int id);
+     // 2 args constructor
+     Passenger(string name, int id);
+    //static function for the current total number of passengers
+    static int get_noPassengers();
+    //Destructor
+    ~Passenger();
+    //Display passenger info
+    void Display() const;
   
 };
 
