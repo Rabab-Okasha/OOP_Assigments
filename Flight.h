@@ -43,15 +43,12 @@ private:
      void search_seatNo(int r, int c);
      //Display flight details
      void Display() const;
-
-
+     //Destructor
+     ~Flight();
     //Copy constructor
 
 
     //Remove passenger methode
-
-    //Destructor
-
 };
 
 
