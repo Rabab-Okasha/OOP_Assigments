@@ -8,14 +8,14 @@ class Flight {
     friend ostream &operator<<(ostream &os, const Flight &flight);
 private:
     vate:
-    int no_of_flights;
+    int no_of_flight;
     int seating_capacity;
     int departure_time;
     string time_zone;
     string flight_dest;
     int **seating_plan;
-    string** seating_names_plan;
     // make a 2d dynamic array to assign passengers names as will be assigned in seating plan
+    string** seating_names_plan;
     string *passengers_names;
     static int CurrentNoBookedOfSeats;
     const int columns = 4; // Assumption of number of seats Per row
@@ -25,41 +25,31 @@ private:
 
 
  public:
-
+     //3 args consturctor
      Flight(string dest , int cap , int number);
+     //Operator prefix++
      Flight &operator ++();
+     //Operator +=
      Flight operator +=(Passenger & p);
+     //Operator postfix--
      Flight operator --();
+     //Operator -=
      Flight operator -=(int num);
+     //Search by name
      void search_passenger(string name);
+     //Display flight details
      void Display() const;
+     //Add passengers to a flight
      void add_passengers(int passengers_number, Passenger names_of_passenger[], Flight& f);
-     friend ostream &operator<<(ostream &os, const Flight &flight);
-
-    //3 args consturctor
 
     //Copy constructor
-
-    //Add passengers to a flight
-
-    //Search by name
+ 
 
     //Search by seat number
-
-    //Operator prefix++
-
-    //Operator postfix--
-
-    //Operator +=
-
-    //Operator -=
 
     //Remove passenger methode
 
     //Destructor
-
-    //Display flight details
-    
 
 };
 
