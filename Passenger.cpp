@@ -2,12 +2,13 @@
 #include <string>
 
 //initialize the static variable
-
+int Passenger::CountTotalPassengers = 0;
 //2 args Constructor
-Passenger::Passenger(string name , int id )
+Passenger::Passenger(string name, int id)
 {
     passenger_name = name;
     passenger_id = id;
+    CountTotalPassengers++;
 }
 
 // insertion operator friend funcion >>
