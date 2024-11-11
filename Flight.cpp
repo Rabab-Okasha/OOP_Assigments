@@ -21,26 +21,82 @@ Flight::Flight(string dest , int cap , int number)
    passengers_names = new string [seating_capacity];
 }
 
-//Display flight details
+
+
+Flight& Flight::operator++( )
+{
+    ++rows;
+        int** temp = new int* [rows];
+        for(int i=0 ; i<rows;i++)
+        {
+            temp = new int* [columns];
+        }
+    for(int i=0 ; i<rows;i++)
+    { temp[rows] = new int[columns];
+        for(int j=0 ; j<columns ; j++)
+            temp[i][j]=seating_plan[i][j];
+    }
+    delete[]seating_plan;
+    seating_plan = temp;
+    return *this;
+}
+void Flight::add_passengers(int passengers_number, Passenger names_of_passenger[], Flight& f)
+{
+    while(booked_seats + passengers_number > rows*columns)
+         {
+            ++(*this);
+    }
+
+   seating_names_plan = new string*[seating_capacity/columns];
+   for(int i=0 , l=0; i<seating_capacity/columns && l<passengers_number ; i++,l++)
+   {
+       seating_names_plan[i]= new string[columns];
+
+       for(int j=0,k=0 ; j<columns&&l<passengers_number;j++,k++)
+          {
+           seating_names_plan[i][j]=names_of_passenger[l].getname();
+           passengers_names[l]=names_of_passenger[l].getname();
+          }
+   }
+   for(int i=0; i<rows ; i++)
+   {
+       for(int j=0 ; j<columns&&passengers_number>0;j++)
+          {
+           seating_plan[i][j]=1;
+           passengers_number--;
+           booked_seats++;
+          }
+   }
+    for(int i=0 ;i<passengers_number;i++)
+    {
+        for(int l=0 ; l< columns;l++)
+        {
+            seating_plan[counter_rows][counter_columns]=1;
+            counter_columns++;
+        }
+        counter_rows++;
+    }}
+
 void Flight::Display() const{
     //Displaying flight details
    cout << "Flight Details: " << endl;
    cout << "------------------------------";
-   cout << "\nNumber of flights: " << setw(8) << no_of_flights
-        << "\nSeating capacity: " << setw(8) << seating_capacity
-        << "\nDeparture Time: " << setw(11) << departure_time << " " << time_zone
-        << "\nDestination: " << setw(15) << flight_dest
-        << "\nSeating plan: " << endl;
+   cout << "\nNumber of flight: " << setw(8) << no_of_flights;
+   cout << "\nSeating capacity: " << setw(8) << seating_capacity;
+   cout << "\nDeparture Time: " << setw(10) << departure_time << " " << time_zone;
+   cout << "\nDestination: " << setw(13) << flight_dest;
+   cout << "\nSeating plan: \n";
    //Displaying the Seating plan
    for(int i = 0; i < rows; i++){
        for(int j = 0; j < columns; j++)
-           cout << setw(5) << left << seating_plan[i][j] << " ";
+           cout << setw(5) << seating_plan[i][j] << " ";
        cout << endl;
    }
-   cout << "\nPassengers' names: " << endl;
+  
+   cout << "\nPassengers' names: ";
    //displaying passengers' names
    for(int i = 0; i < seating_capacity; i++)
-       cout << "Passanger " << i + 1 << ": " << passengers_names[i] << endl;
+       cout << "\nPassanger " << i + 1 << ": " << passengers_names[i];
 }
 
 
