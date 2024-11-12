@@ -3,12 +3,18 @@
 
 //initialize the static variable
 int Passenger::CountTotalPassengers = 0;
+// default constructor 
+Passenger::Passenger(){}
+
 //2 args Constructor
-Passenger::Passenger(string name, int id)
+Passenger::Passenger(string name , int id )
 {
     passenger_name = name;
     passenger_id = id;
-    CountTotalPassengers++;
+}
+string Passenger::getname ()const
+{
+    return passenger_name;
 }
 
 // insertion operator friend funcion >>
