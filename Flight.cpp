@@ -150,10 +150,34 @@ void Flight::Display() const {
     cout << "\nDestination: " << setw(13) << flight_dest << "\n------------------------------" << endl;
 }
 
+//operator postfix--
+Flight Flight::operator--(int){
+    Flight temp = *this;
+    temp.booked_seats--;
+    Passenger::CountTotalPassengers--;
+    int r = temp.booked_seats / columns;
+    int c = temp.booked_seats % columns;
+    temp.seating_plan[r][c] = 0;
+    return temp;
+}
+
+//Operator -=
+Flight &Flight::operator-=(int num){
+    for(int i = 0; i < num && (Passenger::CountTotalPassengers > 0); i++){
+        booked_seats--;
+        Passenger::CountTotalPassengers--;
+        int r = booked_seats / columns;
+        int c = booked_seats % columns;
+        seating_plan[r][c] = 0;
+    }
+    return *this;
+}
+
    //Copy constructor
 Flight::Flight(const Flight &obj) {
     no_of_flight = obj.no_of_flight;
     seating_capacity = obj.seating_capacity;
+    booked_seats = obj.booked_seats;
     departure_time = obj.departure_time;
     time_zone = obj.time_zone;
     flight_dest = obj.flight_dest;
@@ -167,11 +191,9 @@ Flight::Flight(const Flight &obj) {
             seating_plan[i][j] = obj.seating_plan[i][j];
     }
     passengers_names = new string[seating_capacity];
-    for (int i = 0; i < seating_capacity; i++) 
+    for (int i = 0; i < seating_capacity; i++)
         passengers_names[i] = obj.passengers_names[i];
-    // increase numnber of passengers in the system by double number of passengers in the 1st object
-    Passenger::CountTotalPassengers *= 2; 
-} 
+}
     
 //Destructor
 Flight::~Flight()
