@@ -1,4 +1,6 @@
 #include "Flight.h"
+#include <iostream>
+#include <iomanip>
 #include <string>
 using namespace std;
 
@@ -6,9 +8,7 @@ using namespace std;
 int Flight::CurrentNoBookedOfSeats = 0;
 
 //3 args constructor
-
-Flight::Flight(string dest, int cap, int number)
-{
+Flight::Flight(string dest, int cap, int number){
     seating_capacity = cap;
     no_of_flights = number;
     flight_dest = dest;
@@ -20,13 +20,12 @@ Flight::Flight(string dest, int cap, int number)
         seating_plan[i] = new int[columns];
         for (int j = 0; j < columns; j++) {
             seating_plan[i][j] = 0;
-        }}
+        }
+    }
     passengers_names = new string[seating_capacity];
 }
 
-
 //overload the prefix operator ++ 
-
 Flight& Flight::operator++()
 {
     ++rows;
@@ -36,7 +35,8 @@ Flight& Flight::operator++()
      for (int j = 0; j < columns; j++)
         {
          temp[i][j] = seating_plan[i][j];
-            }}
+            }
+     }
 temp[rows - 1] = new int[columns];
 for (int j = 0; j < columns; j++) {
     temp[rows - 1][j] = 0;
@@ -49,17 +49,12 @@ seating_plan = temp;
     return *this;
 }
 
-
-
 // overload += operator 
-Flight& Flight::operator +=(Passenger & p)
-{
+Flight& Flight::operator +=(Passenger & p){
  add_passengers(1, &p, *this);
   passengers_names[booked_seats]=p.getname();
     return *this;
 }
-
-
 
 //Add passegners method
 void Flight::add_passengers(int passengers_number, Passenger names_of_passenger[], Flight& f)
@@ -75,10 +70,8 @@ void Flight::add_passengers(int passengers_number, Passenger names_of_passenger[
 if (passengers_number > seating_capacity) {
         ++(*this);
         add_passengers(passengers_number, names_of_passenger, f);
-    }}
-
-
-
+    }
+}
 
 //Search by passenger's name
 bool Flight::search_name(string nm){
@@ -91,9 +84,6 @@ bool Flight::search_name(string nm){
     cout << "Passanger is Not on the flight" << endl;
     return false;
 }
-
-
-
 
 //Search by seat number
 void Flight::search_seatNo(int r, int c){
@@ -124,6 +114,7 @@ void Flight::Display() const {
         }
         cout << endl;
     }
+    
  //displaying passengers' names
     cout << "\nPassengers' names: "<<endl;
     for (int i = 0; i < seating_capacity; i++) {
