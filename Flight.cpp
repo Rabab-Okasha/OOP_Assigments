@@ -4,8 +4,8 @@
 #include <string>
 using namespace std;
 
-//initialize the static variable
-int Flight::CurrentNoBookedOfSeats = 0;
+//initialize static variable
+int Flight:: CurrentNoBookedOfSeats=0;
 
 //operator <<
 ostream &operator<<(ostream &os, const Flight &flight){
@@ -26,24 +26,24 @@ ostream &operator<<(ostream &os, const Flight &flight){
     }
     return os;
 }
-
-//3 args constructor
-Flight::Flight(string dest, int cap, int number){
+    
+//parameterized constructor 
+Flight::Flight(string dest, int cap, int number)
+{
     seating_capacity = cap;
     no_of_flights = number;
     flight_dest = dest;
     departure_time = "00:00";
     time_zone = " ";
     rows = seating_capacity / columns;
-    if (seating_capacity % columns != 0)
-        rows++;
+    if (seating_capacity % columns != 0) {
+        rows++;}
     seating_plan = new int*[rows];
     for (int i = 0; i < rows; i++) {
         seating_plan[i] = new int[columns];
         for (int j = 0; j < columns; j++) {
             seating_plan[i][j] = 0;
-        }
-    }
+        }}
     passengers_names = new string[seating_capacity];
 }
 
@@ -51,48 +51,49 @@ Flight::Flight(string dest, int cap, int number){
 Flight& Flight::operator++()
 {
     ++rows;
+    seating_capacity = rows * columns;
     int** temp = new int*[rows];
-     for (int i = 0; i < rows - 1; i++) {
-         temp[i] = new int[columns];
-     for (int j = 0; j < columns; j++)
-        {
-         temp[i][j] = seating_plan[i][j];
-            }
-     }
-temp[rows - 1] = new int[columns];
-for (int j = 0; j < columns; j++) {
-    temp[rows - 1][j] = 0;
-}
-for (int i = 0; i < rows - 1; i++) {
-    delete[] seating_plan[i];
-}
-delete[] seating_plan;
-seating_plan = temp;
+    for (int i = 0; i < rows - 1; i++) {
+        temp[i] = seating_plan[i];
+    }
+    temp[rows - 1] = new int[columns];
+    for (int j = 0; j < columns; j++) {
+        temp[rows - 1][j] = 0;
+    }
+    for (int i = 0; i < rows - 1; i++) {
+        delete[] seating_plan[i];
+    }
+    delete[] seating_plan;
+    seating_plan = temp;
     return *this;
 }
 
-// overload += operator 
-Flight& Flight::operator +=(Passenger & p){
+//operator +=
+Flight& Flight::operator +=(Passenger & p)
+{
  add_passengers(1, &p, *this);
   passengers_names[booked_seats]=p.getname();
+
     return *this;
 }
 
-//Add passegners method
-void Flight::add_passengers(int number_of_passengers, Passenger names_of_passengers[], Flight& f)
+// remove passenger by name
+Flight & Flight::remove_passenger(Passenger &p2)
 {
-    for (int i = 0; i < rows && number_of_passengers > 0; i++) {
-        for (int j = 0; j < columns && number_of_passengers > 0; j++) {
-            if (seating_plan[i][j] == 0) {
-                seating_plan[i][j] = 1;
-                passengers_names[booked_seats] = names_of_passengers[booked_seats].getname();
-                booked_seats++;
-                number_of_passengers--;
-            }}}
-if (number_of_passengers > seating_capacity) {
-        ++(*this);
-        add_passengers(number_of_passengers, names_of_passengers, f);
-    }
+    for(int i=0;i<booked_seats ;i++)
+    {
+        if(passengers_names[i]==p2.getname())
+        {
+            for(int k=0;k<booked_seats-1;k++)
+            {
+                passengers_names[i]=passengers_names[i+1];
+            }}
+            //calling operator -- to update seating plan
+            }
+  CurrentNoBookedOfSeats--;
+  booked_seats--;
+  return *this;
+
 }
 
 //Search by passenger's name
@@ -118,8 +119,25 @@ void Flight::search_seatNo(int r, int c){
         cout << "Invalid seat number!" << endl;
 }
 
-//Display method
+//add passenger
+void Flight::add_passengers(int passengers_number, Passenger names_of_passenger[], Flight& f)
+{
+while (passengers_number > seating_capacity-booked_seats) {
+        ++(*this);
+        add_passengers(passengers_number, names_of_passenger, f);
+    }
 
+    for (int i = 0; i < rows && passengers_number > 0; i++) {
+        for (int j = 0; j < columns && passengers_number > 0; j++) {
+            if (seating_plan[i][j] == 0) {
+                seating_plan[i][j] = 1;
+                passengers_names[booked_seats] = names_of_passenger[booked_seats].getname();
+                booked_seats++;
+                CurrentNoBookedOfSeats++;
+                passengers_number--;
+            }}}}
+
+//display flight details
 void Flight::Display() const {
       //Displaying flight details
     cout << "\nFlight Details: " << endl;
@@ -130,7 +148,7 @@ void Flight::Display() const {
     cout << "\nDestination: " << setw(13) << flight_dest << "\n------------------------------" << endl;
 }
 
-//Copy constructor
+   //Copy constructor
 Flight::Flight(const Flight &obj) {
     no_of_flight = obj.no_of_flight;
     seating_capacity = obj.seating_capacity;
@@ -151,10 +169,11 @@ Flight::Flight(const Flight &obj) {
         passengers_names[i] = obj.passengers_names[i];
     // increase numnber of passengers in the system by double number of passengers in the 1st object
     Passenger::CountTotalPassengers *= 2; 
-}
-
+} 
+    
 //Destructor
-Flight::~Flight(){
+Flight::~Flight()
+{
     for(int i = 0; i < rows; i++)
         delete [] seating_plan[i];
     delete [] seating_plan;
