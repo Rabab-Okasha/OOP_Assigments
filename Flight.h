@@ -14,16 +14,11 @@ private:
     string time_zone;
     string flight_dest;
     int **seating_plan;
-    
-    string** seating_names_plan;
+    string** seating_names_plan; //??????
     string *passengers_names;
-    static int CurrentNoBookedOfSeats;
     const int columns = 4; // Assumption of number of seats Per row
     int rows = (seating_capacity / columns); //no of rows = capicity / no of columns
     int booked_seats = 0;
-    int counter_rows=0, counter_columns=0; //to know the index of the last added passenger
-
-
  public:
      //3 args consturctor
      Flight(string dest , int cap , int number);
@@ -37,18 +32,17 @@ private:
      Flight operator-=(int num);
      //Add passengers to a flight
      void add_passengers(int passengers_number, Passenger names_of_passenger[], Flight& f);
+     //Remove passenger methode
      //Search by name
      bool search_name(string nm);
      //Search by seat number
      void search_seatNo(int r, int c);
      //Display flight details
      void Display() const;
-     //Destructor
-     ~Flight();
     //Copy constructor
-
-
-    //Remove passenger methode
+     Flight(const Flight &obj);
+     //Destructor
+     ~Flight();   
 };
 
 
