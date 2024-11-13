@@ -28,13 +28,13 @@ private:
      //3 args consturctor
      Flight(string dest , int cap , int number);
      //Operator prefix++
-     Flight &operator ++();
+     Flight &operator++();
      //Operator +=
-     Flight operator +=(Passenger & p);
+     Flight operator+=(Passenger & p);
      //Operator postfix--
-     Flight operator --();
+     Flight operator--(int);
      //Operator -=
-     Flight operator -=(int num);
+     Flight operator-=(int num);
      //Add passengers to a flight
      void add_passengers(int passengers_number, Passenger names_of_passenger[], Flight& f);
      //Search by name
