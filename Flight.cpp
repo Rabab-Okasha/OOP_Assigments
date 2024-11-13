@@ -122,12 +122,35 @@ void Flight::search_seatNo(int r, int c){
 
 void Flight::Display() const {
       //Displaying flight details
-    cout << "Flight Details: " << endl;
+    cout << "\nFlight Details: " << endl;
     cout << "------------------------------";
     cout << "\nNumber of flight: " << setw(8) << no_of_flights;
     cout << "\nSeating capacity: " << setw(8) << seating_capacity;
     cout << "\nDeparture Time: " << setw(10) << departure_time << " " << time_zone;
-    cout << "\nDestination: " << setw(13) << flight_dest;
+    cout << "\nDestination: " << setw(13) << flight_dest << "\n------------------------------" << endl;
+}
+
+//Copy constructor
+Flight::Flight(const Flight &obj) {
+    no_of_flight = obj.no_of_flight;
+    seating_capacity = obj.seating_capacity;
+    departure_time = obj.departure_time;
+    time_zone = obj.time_zone;
+    flight_dest = obj.flight_dest;
+    rows = obj.rows;
+    if (seating_capacity % columns != 0)
+        rows++;
+    seating_plan = new int *[rows];
+    for (int i = 0; i < rows; i++) {
+        seating_plan[i] = new int[columns];
+        for (int j = 0; j < columns; j++)
+            seating_plan[i][j] = obj.seating_plan[i][j];
+    }
+    passengers_names = new string[seating_capacity];
+    for (int i = 0; i < seating_capacity; i++) 
+        passengers_names[i] = obj.passengers_names[i];
+    // increase numnber of passengers in the system by double number of passengers in the 1st object
+    Passenger::CountTotalPassengers *= 2; 
 }
 
 //Destructor
