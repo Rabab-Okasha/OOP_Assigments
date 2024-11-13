@@ -10,12 +10,12 @@ int main(){
     Flight f1("London", 16, 123);
     cout << "\nEnter number of passengers to be add: ";
     cin >> passengerNumbers;
-    Passenger names [passnum];
-    for(int i = 0; i < names; i++)
+    Passenger names [passengerNumbers];
+    for(int i = 0; i < passengerNumbers; i++)
         cin >> names[i];// cteate object for each index
-    
+
     //Testing function add_passenger
-    f1.add_passengers(passengerNumbers, arr,  f1);
+    f1.add_passengers(passengerNumbers, names,  f1);
     f1.Display();
     cout << f1 << endl;
     
