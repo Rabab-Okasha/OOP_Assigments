@@ -90,6 +90,7 @@ Flight & Flight::remove_passenger(Passenger &p2)
             }}
             //calling operator -- to update seating plan
             }
+  CountTotalPassengers--;
   CurrentNoBookedOfSeats--;
   booked_seats--;
   return *this;
@@ -135,6 +136,7 @@ while (passengers_number > seating_capacity-booked_seats) {
                 booked_seats++;
                 CurrentNoBookedOfSeats++;
                 passengers_number--;
+                CountTotalPassengers++;
             }}}}
 
 //display flight details
