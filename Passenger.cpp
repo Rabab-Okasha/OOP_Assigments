@@ -26,12 +26,12 @@ string Passenger::getname ()const
 }
 
 // insertion operator friend funcion >>
-istream &operator>>(istream &is ,  Passenger &p )
-{
+istream &operator>>(istream &is ,  Passenger &p ){
    cout << "\nEnter your name : ";
    is >> p.passenger_name;
    cout << "\nEnter your ID : ";
    is >> p.passenger_id;
+    return is;
 }
 
 //Destructor
