@@ -1,6 +1,7 @@
 #ifndef OOPPROJECTS_FLIGHT_H
 #define OOPPROJECTS_FLIGHT_H
 #include <string>
+#include "Passenger.h"
 using namespace std;
 
 class Flight {
