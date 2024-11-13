@@ -27,9 +27,9 @@ string Passenger::getname ()const
 
 // insertion operator friend funcion >>
 istream &operator>>(istream &is ,  Passenger &p ){
-   cout << "\nEnter your name : ";
+   cout << "Enter your name : ";
    is >> p.passenger_name;
-   cout << "\nEnter your ID : ";
+   cout << "Enter your ID : ";
    is >> p.passenger_id;
     return is;
 }
