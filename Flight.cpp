@@ -32,9 +32,11 @@ Flight::Flight(string dest, int cap, int number){
     seating_capacity = cap;
     no_of_flights = number;
     flight_dest = dest;
+    departure_time = "00:00";
+    time_zone = " ";
     rows = seating_capacity / columns;
-    if (seating_capacity % columns != 0) {
-        rows++;}
+    if (seating_capacity % columns != 0)
+        rows++;
     seating_plan = new int*[rows];
     for (int i = 0; i < rows; i++) {
         seating_plan[i] = new int[columns];
