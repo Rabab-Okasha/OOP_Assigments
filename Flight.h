@@ -7,14 +7,14 @@ using namespace std;
 class Flight {
     friend ostream &operator<<(ostream &os, const Flight &flight);
 private:
-    vate:
+    
     int no_of_flight;
     int seating_capacity;
     int departure_time;
     string time_zone;
     string flight_dest;
     int **seating_plan;
-    // make a 2d dynamic array to assign passengers names as will be assigned in seating plan
+    
     string** seating_names_plan;
     string *passengers_names;
     static int CurrentNoBookedOfSeats;
