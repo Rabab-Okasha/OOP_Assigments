@@ -30,6 +30,10 @@ int main(){
     Passenger p1;
     cout<<"add passenger += \n";
     cin>>p1;
+    fl+=p1;
+
+    fl.Display();in>>p1;
+    
     p1.Display_passenger();
     return 0;
 }
