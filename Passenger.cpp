@@ -11,7 +11,15 @@ Passenger::Passenger(string name , int id )
 {
     passenger_name = name;
     passenger_id = id;
+    CountTotalPassengers++;
 }
+
+//static function for the current total number of passengers
+int Passenger::get_noPassenger(){
+    return CountTotalPassengers;
+}
+
+//get passenger name
 string Passenger::getname ()const
 {
     return passenger_name;
@@ -27,8 +35,10 @@ istream &operator>>(istream &is ,  Passenger &p )
 }
 
 //Destructor
-
-//static function for the current total number of passengers
+Passenger::~Passenger(){
+    CountTotalPassengers--;
+    cout << "Destructor of Passenger class has been called" << endl;
+}
 
 //Display passenger's info
 void Passenger::Display() const{
