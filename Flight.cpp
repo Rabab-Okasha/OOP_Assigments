@@ -7,6 +7,26 @@ using namespace std;
 //initialize the static variable
 int Flight::CurrentNoBookedOfSeats = 0;
 
+//operator <<
+ostream &operator<<(ostream &os, const Flight &flight){
+    //Displaying the Seating plan
+    cout << "\nSeating plan: " << endl;
+    for (int i = 0; i < flight.rows; i++) {
+        for (int j = 0; j < flight.columns; j++) {
+            os << setw(5) << flight.seating_plan[i][j] << " ";
+        }
+        cout << endl;
+    }
+    //displaying passengers' names
+    cout << "\nPassengers' names: "<<endl;
+    for (int i = 0; i < flight.seating_capacity; i++) {
+        if (!flight.passengers_names[i].empty()) {
+            os << "Passanger " << i + 1 << ": " << flight.passengers_names[i] << endl;
+        }
+    }
+    return os;
+}
+
 //3 args constructor
 Flight::Flight(string dest, int cap, int number){
     seating_capacity = cap;
@@ -106,22 +126,6 @@ void Flight::Display() const {
     cout << "\nSeating capacity: " << setw(8) << seating_capacity;
     cout << "\nDeparture Time: " << setw(10) << departure_time << " " << time_zone;
     cout << "\nDestination: " << setw(13) << flight_dest;
-    cout << "\nSeating plan: \n";
-    //Displaying the Seating plan
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < columns; j++) {
-            cout << setw(5) << seating_plan[i][j] << " ";
-        }
-        cout << endl;
-    }
-    
- //displaying passengers' names
-    cout << "\nPassengers' names: "<<endl;
-    for (int i = 0; i < seating_capacity; i++) {
-        if (!passengers_names[i].empty()) {
-            cout << "Passanger " << i + 1 << ": " << passengers_names[i]<<endl;
-        }
-    }
 }
 
 //Destructor
