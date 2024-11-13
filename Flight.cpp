@@ -77,19 +77,19 @@ Flight& Flight::operator +=(Passenger & p){
 }
 
 //Add passegners method
-void Flight::add_passengers(int passengers_number, Passenger names_of_passenger[], Flight& f)
+void Flight::add_passengers(int number_of_passengers, Passenger names_of_passengers[], Flight& f)
 {
-    for (int i = 0; i < rows && passengers_number > 0; i++) {
-        for (int j = 0; j < columns && passengers_number > 0; j++) {
+    for (int i = 0; i < rows && number_of_passengers > 0; i++) {
+        for (int j = 0; j < columns && number_of_passengers > 0; j++) {
             if (seating_plan[i][j] == 0) {
                 seating_plan[i][j] = 1;
-                passengers_names[booked_seats] = names_of_passenger[booked_seats].getname();
+                passengers_names[booked_seats] = names_of_passengers[booked_seats].getname();
                 booked_seats++;
-                passengers_number--;
+                number_of_passengers--;
             }}}
-if (passengers_number > seating_capacity) {
+if (number_of_passengers > seating_capacity) {
         ++(*this);
-        add_passengers(passengers_number, names_of_passenger, f);
+        add_passengers(number_of_passengers, names_of_passengers, f);
     }
 }
 
