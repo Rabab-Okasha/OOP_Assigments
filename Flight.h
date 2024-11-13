@@ -5,7 +5,6 @@
 using namespace std;
 
 class Flight {
-    friend class Passenger;
     friend ostream &operator<<(ostream &os, const Flight &flight);
 private:
     vate:
