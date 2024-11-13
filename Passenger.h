@@ -5,24 +5,24 @@ using namespace std;
 
 class Passenger {
 friend class Flight;
-friend istream& operator>>(istream &is,  Passenger &p);
- private:
-    string passenger_name;
-    int passenger_id;
-    static int CountTotalPassengers;
-public:
-     // default constructor 
-     Passenger();
-     // 2 args constructor
-     Passenger(string name, int id);
-    //static function for the current total number of passengers
-    static int get_noPassengers();
-    // get passenger name fn 
-      string getname()const;
-    //Destructor
-    ~Passenger();
-    //Display passenger info
-    void Display() const;
+    friend istream& operator>>(istream &is ,  Passenger &p );
+    private:
+        string passenger_name;
+        int passenger_id;
+    public:
+        static int CountTotalPassengers;
+        // default constructor 
+        Passenger();
+        // 2 args constructor
+        Passenger(string name , int id);
+        // get passenger name fn
+        string getname()const;
+        //static function for the current total number of passengers
+        static int get_noPassenger();
+        //Display passenger info
+        void Display()const;
+        //Destructor
+        ~Passenger();
   
 };
 
