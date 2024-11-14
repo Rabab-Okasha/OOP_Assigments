@@ -1,13 +1,13 @@
 #include "Flight.h"
+#include "Passenger.h"
 #include <iostream>
 #include <iomanip>
 #include <string>
 using namespace std;
+#include "Passenger.h"
 
-//initialize static variable
-int Flight:: CurrentNoBookedOfSeats=0;
 
-//operator <<
+// overload operator <<
 ostream &operator<<(ostream &os, const Flight &flight){
     //Displaying the Seating plan
     cout << "\nSeating plan: " << endl;
@@ -26,8 +26,8 @@ ostream &operator<<(ostream &os, const Flight &flight){
     }
     return os;
 }
-    
-//parameterized constructor 
+
+//parameterized constructor
 Flight::Flight(string dest, int cap, int number)
 {
     seating_capacity = cap;
@@ -47,7 +47,7 @@ Flight::Flight(string dest, int cap, int number)
     passengers_names = new string[seating_capacity];
 }
 
-//overload the prefix operator ++ 
+//overload the prefix operator ++
 Flight& Flight::operator++()
 {
     ++rows;
@@ -88,10 +88,9 @@ Flight & Flight::remove_passenger(Passenger &p2)
             {
                 passengers_names[i]=passengers_names[i+1];
             }}
-            //calling operator -- to update seating plan
+
             }
-  CountTotalPassengers--;
-  CurrentNoBookedOfSeats--;
+  Passenger::CountTotalPassengers --;
   booked_seats--;
   return *this;
 
@@ -134,12 +133,9 @@ while (passengers_number > seating_capacity-booked_seats) {
                 seating_plan[i][j] = 1;
                 passengers_names[booked_seats] = names_of_passenger[booked_seats].getname();
                 booked_seats++;
+                Passenger::CountTotalPassengers ++;
                 passengers_number--;
-                CountTotalPassengers++;
-            }
-        }
-    }
-}
+            }}}}
 
 //display flight details
 void Flight::Display() const {
@@ -174,12 +170,10 @@ Flight &Flight::operator-=(int num){
     }
     return *this;
 }
-
    //Copy constructor
 Flight::Flight(const Flight &obj) {
-    no_of_flight = obj.no_of_flight;
+    no_of_flights = obj.no_of_flights;
     seating_capacity = obj.seating_capacity;
-    booked_seats = obj.booked_seats;
     departure_time = obj.departure_time;
     time_zone = obj.time_zone;
     flight_dest = obj.flight_dest;
@@ -195,8 +189,10 @@ Flight::Flight(const Flight &obj) {
     passengers_names = new string[seating_capacity];
     for (int i = 0; i < seating_capacity; i++)
         passengers_names[i] = obj.passengers_names[i];
+    // increase numnber of passengers in the system by double number of passengers in the 1st object
+    Passenger::CountTotalPassengers *= 2;
 }
-    
+
 //Destructor
 Flight::~Flight()
 {
