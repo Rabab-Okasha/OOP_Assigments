@@ -77,17 +77,19 @@ Flight& Flight::operator +=(Passenger & p){
 }
 
 
+
 // remove passenger by name
 Flight & Flight::remove_passenger(Passenger &p2)
 {
-    for(int i=0;i<booked_seats ;i++)
+    for(int i=0;i<booked_seats;i++)
     {
         if(passengers_names[i]==p2.getname())
         {
-            for(int k=0;k<booked_seats-1;k++)
-            {
                 passengers_names[i]=passengers_names[i+1];
-            }}}
+                for(int k=i ; k<booked_seats-1;k++)
+                {
+                    passengers_names[k+1]=passengers_names[k+2];
+                } }}
             for(int i=rows;i>=0;i--)
             {
                 for(int k=columns;k>=0;k--)
