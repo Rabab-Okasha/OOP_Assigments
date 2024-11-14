@@ -158,11 +158,11 @@ void Flight::Display() const {
 //operator postfix--
 Flight Flight::operator--(int){
     Flight temp = *this;
-    temp.booked_seats--;
+    booked_seats--;
     Passenger::CountTotalPassengers--;
-    int r = temp.booked_seats / columns;
-    int c = temp.booked_seats % columns;
-    temp.seating_plan[r][c] = 0;
+    int r = booked_seats / columns;
+    int c = booked_seats % columns;
+    seating_plan[r][c] = 0;
     return temp;
 }
 
