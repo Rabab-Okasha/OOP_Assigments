@@ -4,8 +4,6 @@
 #include <iomanip>
 #include <string>
 using namespace std;
-#include "Passenger.h"
-
 
 // overload operator <<
 ostream &operator<<(ostream &os, const Flight &flight){
@@ -182,6 +180,7 @@ Flight &Flight::operator-=(int num){
 Flight::Flight(const Flight &obj) {
     no_of_flights = obj.no_of_flights;
     seating_capacity = obj.seating_capacity;
+    booked_seats = obj.booked_seats;
     departure_time = obj.departure_time;
     time_zone = obj.time_zone;
     flight_dest = obj.flight_dest;
