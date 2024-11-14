@@ -38,7 +38,7 @@ friend ostream &operator<<(ostream &os, const Flight &flight);
      //Search by seat number
      void search_seatNo(int r, int c);
      //Add passengers to a flight
-     void add_passengers(int passengers_number, Passenger names_of_passenger[], Flight& f);
+     void add_passengers(int passengers_number, Passenger names_of_passenger[]);
      //Display flight details
      void Display() const;
      //Copy constructor
