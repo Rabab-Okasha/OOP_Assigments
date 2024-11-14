@@ -60,5 +60,8 @@ int main(){
     cout << "\nNumber of passengers in the system" << "(After removing " << removed_num << " ):";
     cout <<  p.get_noPassengers() << endl;
 
+    //Testing total number of passengers
+    cout << "Passengers count: " << Passenger::get_noPassenger() << endl;
+
     return 0;
 }
