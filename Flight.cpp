@@ -77,6 +77,7 @@ Flight& Flight::operator +=(Passenger & p)
     return *this;
 }
 
+
 // remove passenger by name
 Flight & Flight::remove_passenger(Passenger &p2)
 {
@@ -87,9 +88,16 @@ Flight & Flight::remove_passenger(Passenger &p2)
             for(int k=0;k<booked_seats-1;k++)
             {
                 passengers_names[i]=passengers_names[i+1];
-            }}
-
-            }
+            }}}
+            for(int i=rows;i>=0;i--)
+            {
+                for(int k=columns;k>=0;k--)
+                {
+                    if(seating_plan[i][k]==1)
+                    {
+                        seating_plan[i][k]=0;
+                        break;
+                    }}}
   Passenger::CountTotalPassengers --;
   booked_seats--;
   return *this;
