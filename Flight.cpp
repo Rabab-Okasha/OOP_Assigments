@@ -197,7 +197,7 @@ Flight::Flight(const Flight &obj) {
             seating_plan[i][j] = obj.seating_plan[i][j];
     }
     passengers_names = new string[seating_capacity];
-    for (int i = 0; i < seating_capacity; i++)
+    for (int i = 0; i < booked_seats; i++)
         passengers_names[i] = obj.passengers_names[i];
     // increase numnber of passengers in the system by double number of passengers in the 1st object
     Passenger::CountTotalPassengers *= 2;
