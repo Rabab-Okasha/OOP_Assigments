@@ -134,10 +134,12 @@ while (passengers_number > seating_capacity-booked_seats) {
                 seating_plan[i][j] = 1;
                 passengers_names[booked_seats] = names_of_passenger[booked_seats].getname();
                 booked_seats++;
-                CurrentNoBookedOfSeats++;
                 passengers_number--;
                 CountTotalPassengers++;
-            }}}}
+            }
+        }
+    }
+}
 
 //display flight details
 void Flight::Display() const {
