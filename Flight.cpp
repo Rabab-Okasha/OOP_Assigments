@@ -168,12 +168,12 @@ Flight Flight::operator--(int){
 
 //Operator -=
 Flight &Flight::operator-=(int num){
-    for(int i = 0; i < num && (Passenger::CountTotalPassengers > 0); i++){
+    for(int i = 0; i < num && booked_seats > 0; i++){
         booked_seats--;
-        Passenger::CountTotalPassengers--;
         int r = booked_seats / columns;
         int c = booked_seats % columns;
         seating_plan[r][c] = 0;
+        Passenger::CountTotalPassengers--;
     }
     return *this;
 }
