@@ -1,47 +1,52 @@
 #include "Passenger.h"
 #include <string>
 
-//initialize the static variable
+
+// Initialize the static variable
 int Passenger::CountTotalPassengers = 0;
 
-// default constructor 
-Passenger::Passenger(){}
+// Default constructor
+Passenger::Passenger() {}
 
-//2 args Constructor
-Passenger::Passenger(string name , int id){
-    passenger_name = name;
-    passenger_id = id;
-    CountTotalPassengers++;
+// Constructor with two arguments
+Passenger::Passenger(string name, int id){
+     // initializing private variables
+     passenger_name = name;
+     passenger_id = id;
 }
 
-//static function for the current total number of passengers
-int Passenger::get_noPassenger(){
+// Static function to get current total number of passengers
+int Passenger::get_noPassenger() {
     return CountTotalPassengers;
 }
 
-//get passenger name
-string Passenger::getname ()const{
+// Get passenger name
+string Passenger::getname() const {
     return passenger_name;
 }
 
-
 // Insertion operator overload
 istream &operator>>(istream &is, Passenger &p) {
+    // taking passenger name and initializing it to private variable
     cout << "Enter Passenger name : ";
     is >> p.passenger_name;
+    // taking passenger ID and initializing it to private variable
     cout << "Enter Passenger ID : ";
     is >> p.passenger_id;
     return is;
 }
 
-
-//Destructor
-Passenger::~Passenger(){
+// Destructor
+Passenger::~Passenger() {
+    //for each destroyed passenger object decrement the total number of passengers
     CountTotalPassengers--;
-    cout << "Passenger class Destructor is called" << endl;
+    //massage that indicates the object has been destroyed
+    cout << "Destructor of Passenger class has been called" << endl;
 }
 
-//Display passenger's info
-void Passenger::Display() const{
-    cout << "\nPassenger's name: " << passenger_name << "\nPassenger's ID: " << passenger_id << endl;
+// Display passenger's info
+void Passenger::Display() const {
+    cout << "\nPassenger's name: " << passenger_name
+         << "\nPassenger's ID: " << passenger_id << endl;
 }
+
