@@ -67,11 +67,12 @@ Flight& Flight::operator++()
 }
 
 //operator +=
-Flight& Flight::operator +=(Passenger & p)
-{
- add_passengers(1, &p, *this);
-  passengers_names[booked_seats]=p.getname();
-
+Flight& Flight::operator +=(Passenger & p){
+    int r = booked_seats / columns;
+    int c = booked_seats % columns;
+    seating_plan[r++][c++] = 1;
+    passengers_names[booked_seats] = p.passenger_name;
+    booked_seats += 1;
     return *this;
 }
 
