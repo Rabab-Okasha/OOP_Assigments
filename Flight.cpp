@@ -92,38 +92,28 @@ Flight& Flight::operator +=(Passenger & p)
   return *this;
 }
 
-
-
-// remove passenger by name
-Flight & Flight::remove_passenger(Passenger &p2)
-{
-    for(int i=0;i<booked_seats;i++) // i<booked_seats to ensure that loop stops last add passenger
-    {
-        // if the current index equals the name of the passenger
-        if(passengers_names[i]==p2.getname())
-        {
-                //chainging each index to equal the index after (shifting)
-                passengers_names[i]=passengers_names[i+1];
-                for(int k=i ; k<booked_seats-1;k++)
-                {
-                    passengers_names[k+1]=passengers_names[k+2];
-                }}}
-            //updating the array of seats
-            for(int i=rows;i>=0;i--)
-            {
-                for(int k=columns;k>=0;k--)
-                {
-                    if(seating_plan[i][k]==1)
-                    {
-                        seating_plan[i][k]=0;
-                        break;
-                    }}}
-  // decrement the total number of passengers and booked seats
-  Passenger::CountTotalPassengers --;
-  booked_seats--;
-  return *this;
-
+// remove passenger
+Flight & Flight::remove_passenger(Passenger &p2){
+   bool status = false;
+    for(int i = 0; i < booked_seats; i++){
+        if(passengers_names[i] == p2.passenger.name){
+            status = true;
+            for(int j = i; j < booked_seats - 1; j++){
+                passengers_names[j] = passengers_names[j + 1];
+            }
+            break;
+        }
+    }
+if(status){
+    int r = (booked_seats - 1) / columns;
+    int c = (booked_seats - 1) % columns;
+    seating_plan[r][c] = 0;
+    Passenger::CountTotalPassengers--;
+    booked_seats--;
 }
+return *this;
+}
+
 // Search for a passenger by name in the flight's passenger list
 bool Flight::search_name(string nm) {
     // Loop through all seats in the passenger names array
