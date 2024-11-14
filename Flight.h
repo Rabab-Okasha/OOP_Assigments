@@ -5,19 +5,19 @@
 using namespace std;
 
 class Flight {
-   friend ostream &operator<<(ostream &os, const Flight &flight);
+friend ostream &operator<<(ostream &os, const Flight &flight);
  private:
     int no_of_flights;
     int seating_capacity;
-    int departure_time;
+    string departure_time;
     string time_zone;
     string flight_dest;
     int **seating_plan;
     string *passengers_names;
     const int columns = 4; // Assumption of number of seats Per row
-    int rows = (seating_capacity / columns); //no of rows = capicity / no of columns
+    int rows = (seating_capacity / columns); //no of rows = capacity / no of columns
     int booked_seats = 0;
-   
+
 
 
  public:
@@ -28,9 +28,9 @@ class Flight {
       //Operator +=
      Flight &operator +=(Passenger & p);
      //Operator postfix--
-     Flight operator --();
+     Flight operator --(int);
      //Operator -=
-     Flight operator -=(int num);
+     Flight &operator -=(int num);
      //Remove passenger methode
      Flight &remove_passenger(Passenger &p2);
      //Search by name
@@ -45,7 +45,6 @@ class Flight {
      Flight(const Flight &obj);
      //Destructor
      ~Flight();
-
 };
 
 
