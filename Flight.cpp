@@ -120,11 +120,11 @@ void Flight::search_seatNo(int r, int c){
 }
 
 //add passenger
-void Flight::add_passengers(int passengers_number, Passenger names_of_passenger[], Flight& f)
+void Flight::add_passengers(int passengers_number, Passenger names_of_passenger[])
 {
 while (passengers_number > seating_capacity-booked_seats) {
         ++(*this);
-        add_passengers(passengers_number, names_of_passenger, f);
+        add_passengers(passengers_number, names_of_passenger);
     }
 
     for (int i = 0; i < rows && passengers_number > 0; i++) {
