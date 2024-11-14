@@ -19,7 +19,7 @@ ostream &operator<<(ostream &os, const Flight &flight){
     }
     //displaying passengers' names
     cout << "\nPassengers' names: "<<endl;
-    for (int i = 0; i < flight.seating_capacity; i++) {
+    for (int i = 0; i < flight.booked_seats; i++) {
         if (!flight.passengers_names[i].empty()) {
             os << "Passanger " << i + 1 << ": " << flight.passengers_names[i] << endl;
         }
