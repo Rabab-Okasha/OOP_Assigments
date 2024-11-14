@@ -4,14 +4,16 @@
 using namespace std;
 
 class Passenger {
-friend class Flight;
+// add class Flight as a friend class to access member functions in Flight class
+    friend class Flight;
+    // overloading operator >>
     friend istream& operator>>(istream &is ,  Passenger &p );
     private:
         string passenger_name;
         int passenger_id;
     public:
         static int CountTotalPassengers;
-        // default constructor 
+        // default constructor
         Passenger();
         // 2 args constructor
         Passenger(string name , int id);
@@ -23,6 +25,7 @@ friend class Flight;
         void Display()const;
         //Destructor
         ~Passenger();
+
   
 };
 
