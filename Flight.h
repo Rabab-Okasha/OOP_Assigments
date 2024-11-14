@@ -7,17 +7,16 @@ using namespace std;
 class Flight {
 friend ostream &operator<<(ostream &os, const Flight &flight);
  private:
-    int no_of_flights;
-    int seating_capacity;
+    int no_of_flights;//number of the flight
+    int seating_capacity;// capacity
     string departure_time;
     string time_zone;
     string flight_dest;
-    int **seating_plan;
-    string *passengers_names;
+    int **seating_plan;// array of seats
+    string *passengers_names;// array of passenger names
     const int columns = 4; // Assumption of number of seats Per row
     int rows = (seating_capacity / columns); //no of rows = capacity / no of columns
     int booked_seats = 0;
-
 
 
  public:
