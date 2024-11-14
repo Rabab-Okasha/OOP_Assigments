@@ -154,23 +154,23 @@ void Flight::search_seatNo(int r, int c) {
     }
 }
 //add passenger
-void Flight::add_passengers(int passengers_number, Passenger names_of_passenger[], Flight& f)
-{
-    //checking if there's enough seats for the new added passengers and increment with operator++
-while (passengers_number > seating_capacity-booked_seats) {
+void Flight::add_passengers(int passengers_number, Passenger names_of_passenger[]){
+    while (passengers_number > seating_capacity - booked_seats) {
         ++(*this);
-        add_passengers(passengers_number, names_of_passenger,f);
+        add_passengers(passengers_number, names_of_passenger);
     }
-
     for (int i = 0; i < rows && passengers_number > 0; i++) {
         for (int j = 0; j < columns && passengers_number > 0; j++) {
             if (seating_plan[i][j] == 0) {
-                seating_plan[i][j] = 1; // initialize the unbooked seat to 1
-                passengers_names[booked_seats] = names_of_passenger[booked_seats].getname();//updating the array of passenger names
-                booked_seats++;// increment booked seats by 1
-                Passenger::CountTotalPassengers ++;// increment the total number of passengers by 1
-                passengers_number--; // decrement the passenger number needed to be added by 1
-            }}}}
+                seating_plan[i][j] = 1;
+                passengers_names[booked_seats] = names_of_passenger[booked_seats].getname();
+                booked_seats++;
+                passengers_number--;
+                Passenger::CountTotalPassengers++;
+            }
+        }
+    }
+}
 
 //display flight details
 void Flight::Display() const {
