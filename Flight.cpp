@@ -5,7 +5,6 @@
 #include <string>
 using namespace std;
 
-
 // overload operator <<
 ostream &operator<<(ostream &os, const Flight &flight){
     //Displaying the Seating plan
@@ -17,8 +16,9 @@ ostream &operator<<(ostream &os, const Flight &flight){
         cout << endl;
     }
     //displaying passengers' names
-    cout << "\nPassengers' names: "<<endl;
+    cout << "\nPassengers' names: " << endl;
     for (int i = 0; i < flight.booked_seats; i++) {
+        // if names of passengers is not empty
         if (!flight.passengers_names[i].empty()) {
             os << "Passanger " << i + 1 << ": " << flight.passengers_names[i] << endl;
         }
@@ -26,36 +26,119 @@ ostream &operator<<(ostream &os, const Flight &flight){
     return os;
 }
 
-//parameterized constructor
-Flight::Flight(string dest, int cap, int number)
-{
-    // initializing private variables
+//3 args constructor
+Flight::Flight(string dest, int cap, int number){
     seating_capacity = cap;
-    no_of_flights = number;
+    no_of_flight = number;
     flight_dest = dest;
     departure_time = "00:00";
-    time_zone = " ";
+    time_zone = "KSA";
     rows = seating_capacity / columns;
-    // rounding up rows in case (seating_capacity / columns) is float
-    if (seating_capacity % columns != 0) {
-        rows++;}
+    //if capacity is decimal, add a new row by rounding it up
+    if (seating_capacity % columns != 0)
+        rows++;
     // initializing rows in array of seats (seating_capacity)
     seating_plan = new int*[rows];
     // for each row initializing columns
     for (int i = 0; i < rows; i++) {
         seating_plan[i] = new int[columns];
-        for (int j = 0; j < columns; j++) {
+        for (int j = 0; j < columns; j++)
             // assigning each index to 0
             seating_plan[i][j] = 0;
-        }}
+    }
     // initializing array of passengers
     passengers_names = new string[seating_capacity];
 }
 
+//Add passegners method
+void Flight::add_passengers(int passengers_number, Passenger names_of_passenger[]){
+    //to check that their is available (unbooked) seats
+    while (passengers_number > seating_capacity - booked_seats){
+        //if there is not enought unbooked seats, create a new row
+        ++(*this);
+        add_passengers(passengers_number, names_of_passenger);
+    }
+    for (int i = 0; i < rows && passengers_number > 0; i++) {
+        for (int j = 0; j < columns && passengers_number > 0; j++){
+            //make the seat booked
+            if (seating_plan[i][j] == 0) {
+                seating_plan[i][j] = 1;
+                // add the new passenger name to the list of passengers' names
+                passengers_names[booked_seats] = names_of_passenger[booked_seats].getname();
+                //increment number of booked seats in the flight
+                booked_seats++;
+                //decrement number of the new passengers
+                passengers_number--;
+                //increment number of passengers in system
+                Passenger::CountTotalPassengers++;
+            }
+        }
+    }
+}
+
+//Remove passenger methode
+Flight & Flight::remove_passenger(Passenger &p2){
+    bool status = false;
+    //get index of the passenger to be removed
+    for(int i = 0; i < booked_seats; i++){
+        if(passengers_names[i] == p2.passenger_name){
+            status = true;
+            //shift elements to the left
+            for(int j = i; j < booked_seats - 1; j++)
+                passengers_names[j] = passengers_names[j + 1];
+            break;
+        }
+    }
+    if(status){
+        //update the seating plan after removing passenger
+        int r = (booked_seats - 1) / columns;
+        int c = (booked_seats - 1) % columns;
+        seating_plan[r][c] = 0;
+        //decrement total number of passengers and number of booked seats
+        Passenger::CountTotalPassengers--;
+        booked_seats--;
+    }
+    return *this;
+}
+
+//Search by passenger's name
+bool Flight::search_name(string nm){
+    for(int i = 0; i < seating_capacity; i++){
+        //search for the passenger name in list of passengers names
+        if(passengers_names[i] == nm) {
+            cout << "Passanger " << nm << " is on the flight" << endl;
+            return true;
+        }
+    }
+    cout << "Passanger " << nm << " is Not on the flight" << endl;
+    return false;
+}
+
+//Search by seat number
+void Flight::search_seatNo(int r, int c){
+    if(r >= 0 && r < rows && c >= 0 && c < columns){
+        if(seating_plan[r][c] == 0)
+            cout << "\nSeat " << r << c << " is Not Booked" << endl;
+        else
+            cout << "\nSeat " << r << c << " is Booked" << endl;
+    }else
+        //if seat number is not in the seating plan matrix
+        cout << "\nSeat number " << r << c << " is invalid!!" << endl;
+}
+
+//Display method
+void Flight::Display() const {
+    //Displaying flight details
+    cout << "\nFlight Details: " << endl;
+    cout << "------------------------------";
+    cout << "\nNumber of flight: " << setw(8) << no_of_flight;
+    cout << "\nSeating capacity: " << setw(8) << seating_capacity;
+    cout << "\nDeparture Time: " << setw(10) << departure_time << " " << time_zone;
+    cout << "\nDestination: " << setw(13) << flight_dest << "\n------------------------------" << endl;
+}
+
 //overload the prefix operator ++
-Flight& Flight::operator++()
-{
-    // increment rows by 1
+Flight& Flight::operator++(){
     ++rows;
     // updating capacity
     seating_capacity = rows * columns;
@@ -63,7 +146,9 @@ Flight& Flight::operator++()
     int** temp = new int*[rows];
     // copying data for each row
     for (int i = 0; i < rows - 1; i++) {
-        temp[i] = seating_plan[i];
+        temp[i] = new int[columns];
+        for (int j = 0; j < columns; j++)
+            temp[i][j] = seating_plan[i][j];
     }
     // initialize columns for the new row
     temp[rows - 1] = new int[columns];
@@ -82,183 +167,81 @@ Flight& Flight::operator++()
     return *this;
 }
 
-//operator +=
-Flight& Flight::operator +=(Passenger & p)
-{
-  // calling add_passenger function to add the new passenger
-  // as its only one passenger so the argument of the add_passenger function would be an integer 1 and passing the reference of the added passenger object
-  add_passengers(1, &p, *this);
-  // assigning the name of the new passenger to the array of passenger names
-  passengers_names[booked_seats]=p.getname();
-  return *this;
-}
-
-
-
-// remove passenger by name
-Flight & Flight::remove_passenger(Passenger &p2)
-{
-    for(int i=0;i<booked_seats;i++) // i<booked_seats to ensure that loop stops last add passenger
-    {
-        // if the current index equals the name of the passenger
-        if(passengers_names[i]==p2.getname())
-        {
-                //chainging each index to equal the index after (shifting)
-                passengers_names[i]=passengers_names[i+1];
-                for(int k=i ; k<booked_seats-1;k++)
-                {
-                    passengers_names[k+1]=passengers_names[k+2];
-                }}}
-            //updating the array of seats
-            for(int i=rows;i>=0;i--)
-            {
-                for(int k=columns;k>=0;k--)
-                {
-                    if(seating_plan[i][k]==1)
-                    {
-                        seating_plan[i][k]=0;
-                        break;
-                    }}}
-  // decrement the total number of passengers and booked seats
-  Passenger::CountTotalPassengers --;
-  booked_seats--;
-  return *this;
-
-}
-// Search for a passenger by name 
-bool Flight::search_name(string nm) {
-    for (int i = 0; i < seating_capacity; i++) {
-        // if the passenger name at the current index equals the provided name
-        if (passengers_names[i] == nm) {
-            cout << "Passenger is on the flight" << endl;
-            return true;  // return true if the passenger is found
-        }
-    }
-    // if no match is found after checking all names
-    //output that the passenger is not on the flight
-    cout << "Passenger is Not on the flight" << endl;
-    return false;  // return false if the passenger is not found
-}
-
-//Search by seat number
-void Flight::search_seatNo(int r, int c) {
-    //checking that the seat is within the bounds of the seating plan
-    if (r >= 0 && r < rows && c >= 0 && c < columns) {
-        // check if the seat at row r and column c is unbooked 
-        if (seating_plan[r][c] == 0)
-            cout << "Seat is Not Booked" << endl;  // output if seat is unbooked
-        else
-            cout << "Seat is Booked" << endl;  // output if seat is booked 
-    } else {
-        // if the seat is out of bounds 
-        cout << "Invalid seat number!" << endl;
-    }
-}
-//add passenger
-void Flight::add_passengers(int passengers_number, Passenger names_of_passenger[]){
-    //checking if there's enough seats for the new added passengers and increment with operator++
-    while (passengers_number > seating_capacity - booked_seats) { 
-        ++(*this);
-        add_passengers(passengers_number, names_of_passenger);
-    }
-    for (int i = 0; i < rows && passengers_number > 0; i++) {
-        for (int j = 0; j < columns && passengers_number > 0; j++) {
-            if (seating_plan[i][j] == 0) { // if the the seat is empty
-                seating_plan[i][j] = 1; // initialize the unbooked seat to 1
-                passengers_names[booked_seats] = names_of_passenger[booked_seats].getname(); //updating the array of passenger names
-                booked_seats++;// increment booked seats by 1
-                passengers_number--;// decrement the passenger number needed to be added by 1
-                Passenger::CountTotalPassengers++;// increment the total number of passengers by 1
-            }
-        }
-    }
-}
-
-//display flight details
-void Flight::Display() const {
-      //Displaying flight details
-    cout << "\nFlight Details: " << endl;
-    cout << "------------------------------";
-    cout << "\nNumber of flight: " << setw(8) << no_of_flights; // display number of the flight
-    cout << "\nSeating capacity: " << setw(8) << seating_capacity;// display the capacity
-    cout << "\nDeparture Time: " << setw(10) << departure_time << " " << time_zone;// display the departure time
-    cout << "\nDestination: " << setw(13) << flight_dest << "\n------------------------------" << endl;// display the destination 
-}
-
-// Postfix operator--
-Flight Flight::operator--(int) {
-    // initializing a temporary Flight object that is a copy of the current object 
-    Flight temp = *this;
-
-    // Decrement booked_seats 
-    temp.booked_seats--;
-
-    // Decrement total number of passengers by 1
-    Passenger::CountTotalPassengers--;
-
+// overload += operator
+Flight& Flight::operator+=(Passenger & p){
     // Calculate the row and column positions based on the updated number of booked seats
-    int r = temp.booked_seats / columns;  
-    int c = temp.booked_seats % columns; 
+    int r = booked_seats / columns;
+    int c = booked_seats % columns;
+    // make the seat booked
+    seating_plan[r][c] = 1;
+    passengers_names[booked_seats] = p.passenger_name;
+    //increment booked seats and total count of passengers
+    booked_seats += 1;
+    Passenger::CountTotalPassengers++;
+    return *this;
+}
 
-    // Set the seat at the calculated row and column to 0 
-    temp.seating_plan[r][c] = 0;
-
+//operator postfix--
+Flight Flight::operator--(int){
+    // initializing a temporary Flight object that is a copy of the current object
+    Flight temp = *this;
+    booked_seats--;
+    Passenger::CountTotalPassengers--;
+    // Calculate the row and column positions based on the updated number of booked seats
+    int r = booked_seats / columns;
+    int c = booked_seats % columns;
+    // Set the seat at the calculated row and column to 0
+    seating_plan[r][c] = 0;
     return temp;
 }
 
 //Operator -=
 Flight &Flight::operator-=(int num){
     for(int i = 0; i < num && booked_seats > 0; i++){
-        // Decrement booked seats by 1
         booked_seats--;
-        // Calculate the row and column positions based on the updated number of booked seats
+        //calculate the row and column positions based on the updated number of booked seats
         int r = booked_seats / columns;
         int c = booked_seats % columns;
-         // Set the seat at the calculated row and column to 0
+        //set seat at the calculated row and column to 0
         seating_plan[r][c] = 0;
-        // Decrement total number of passengers
         Passenger::CountTotalPassengers--;
     }
     return *this;
 }
-   //Copy constructor
-Flight::Flight(const Flight &obj) {
-    // copying attributes 
-    no_of_flights = obj.no_of_flights;
+
+//Copy constructor
+Flight::Flight(const Flight &obj){
+    // initializing private variables
+    no_of_flight = obj.no_of_flight;
     seating_capacity = obj.seating_capacity;
     booked_seats = obj.booked_seats;
     departure_time = obj.departure_time;
     time_zone = obj.time_zone;
     flight_dest = obj.flight_dest;
     rows = obj.rows;
-    //rounding up the rows if (seating_capacity / columns) is float
+
+    // rounding up rows in case (seating_capacity / columns) is float
     if (seating_capacity % columns != 0)
         rows++;
     // initializing rows in array of seats (seating_capacity)
     seating_plan = new int *[rows];
-    // for each row initializing columns
     for (int i = 0; i < rows; i++) {
         seating_plan[i] = new int[columns];
-        // copying the data 
         for (int j = 0; j < columns; j++)
             seating_plan[i][j] = obj.seating_plan[i][j];
     }
     // initializing array of passengers
     passengers_names = new string[seating_capacity];
-    // copying the data 
     for (int i = 0; i < booked_seats; i++)
         passengers_names[i] = obj.passengers_names[i];
-    // increase numnber of passengers in the system by double number of passengers in the 1st object
-    Passenger::CountTotalPassengers *= 2;
 }
 
 //Destructor
-Flight::~Flight()
-{
-    // frees the memory for each row
+Flight::~Flight(){
+    //delete the memory for each row
     for(int i = 0; i < rows; i++)
         delete [] seating_plan[i];
-    // frees the memory for the main array with its pointers
+    //delete memory
     delete [] seating_plan;
     delete [] passengers_names;
 }
