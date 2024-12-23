@@ -2,7 +2,6 @@
 #define OOPPROJECTS_DOCTOR_H
 
 #include <string>
-
 using namespace std;
 
 class Doctor {
