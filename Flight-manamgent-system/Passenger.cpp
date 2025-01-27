@@ -1,6 +1,3 @@
-//Rabab Mohamed Abd El-Gafour 20237004  S2
-//Basmala Nabil El-sayed      20235005  S11
-
 #include "Passenger.h"
 #include <iostream>
 #include <string>
