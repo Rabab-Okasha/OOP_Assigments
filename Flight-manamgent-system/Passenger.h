@@ -1,6 +1,3 @@
-//Rabab Mohamed Abd El-Gafour 20237004  S2
-//Basmala Nabil El-sayed      20235005  S11
-
 #ifndef OOPPROJECTS_PASSENGER_H
 #define OOPPROJECTS_PASSENGER_H
 #include <string>
